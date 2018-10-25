@@ -82,7 +82,10 @@ class OneHotDummy(BaseEstimator, TransformerMixin):
         if self.nastate:
             xonehot = scipy.sparse.hstack([xonehot, xonehot.sum(axis=1) == 0])
         # done
-        return xonehot
+        if self.sparse:
+            return xonehot
+        else:
+            return xonehot.toarray()
 
     def get_feature_names(self):
         return mapping_to_colname(
