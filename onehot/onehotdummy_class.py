@@ -75,7 +75,8 @@ class OneHotDummy(BaseEstimator, TransformerMixin):
     def transform(self, X):
         """Convert a nominal variable to an one-hot encoded matrix"""
         # encode labels according to the mapping (without NaN)
-        xlabelenc = grouplabelencode(X, self.mapping, nastate=False)
+        xlabelenc = grouplabelencode(
+            list(map(str, X)), self.mapping, nastate=False)
         # encoded labels to one-hot encoding matrix
         xonehot = onehotencode(xlabelenc, self.mapping)
         # add a NaN column (optional)
