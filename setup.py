@@ -7,7 +7,7 @@ def read(fname):
 
 
 setup(name='onehot',
-      version='0.1.3',
+      version='0.1.4',
       description=(
           "One-Hot encoder with sklearn-ish API interface that process "
           "mixed string and numeric labels directly."),

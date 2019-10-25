@@ -6,6 +6,7 @@ from grouplabelencode import grouplabelencode
 from .onehotencode import onehotencode
 from .mapping_to_colname import mapping_to_colname
 from collections import Counter
+import numpy as np
 
 
 class OneHotDummy(BaseEstimator, TransformerMixin):
@@ -44,8 +45,9 @@ class OneHotDummy(BaseEstimator, TransformerMixin):
     sep : str
         Seperator used in column names (Default: "_")
     """
-    def __init__(self, mapping=None, nastate=False, droprule=None,
-                 sparse=True, nametyp=None, prefix="col", sep='_'):
+    def __init__(self, mapping: dict = None, nastate: bool = False,
+                 droprule: str = None, sparse: bool = True,
+                 nametyp: str = None, prefix: str = "col", sep: str = '_'):
         self.mapping = mapping   # fit or given
         self.nastate = nastate   # see pandas.get_dummies(dummy_na)
         self.droprule = droprule
@@ -55,7 +57,7 @@ class OneHotDummy(BaseEstimator, TransformerMixin):
         self.prefix = prefix
         self.sep = sep
 
-    def fit(self, X, y=None):
+    def fit(self, X: np.ndarray, y=None):
         """Use fit to create or overwrite the mapping"""
         # drop a column
         drop_label = None
@@ -72,7 +74,7 @@ class OneHotDummy(BaseEstimator, TransformerMixin):
 
         return self
 
-    def transform(self, X):
+    def transform(self, X: np.ndarray) -> np.ndarray:
         """Convert a nominal variable to an one-hot encoded matrix"""
         # encode labels according to the mapping (without NaN)
         xlabelenc = grouplabelencode(
@@ -88,7 +90,7 @@ class OneHotDummy(BaseEstimator, TransformerMixin):
         else:
             return xonehot.toarray()
 
-    def get_feature_names(self):
+    def get_feature_names(self) -> list:
         return mapping_to_colname(
             self.mapping, typ=self.nametyp, prefix=self.prefix,
             sep=self.sep, nastate=self.nastate)

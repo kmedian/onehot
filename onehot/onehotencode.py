@@ -1,8 +1,10 @@
 
 import scipy.sparse
+import numpy as np
 
 
-def onehotencode(xencoded, mapping):
+def onehotencode(xencoded: np.ndarray,
+                 mapping: dict) -> scipy.sparse.lil_matrix:
 
     out = scipy.sparse.lil_matrix(
         (len(xencoded), len(mapping)), dtype=int)

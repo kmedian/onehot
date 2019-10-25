@@ -1,7 +1,10 @@
 
 
-def mapping_to_colname(mapping_, typ=None, prefix="col", sep="_",
-                       nastate=False):
+def mapping_to_colname(mapping_: dict,
+                       typ: int = None,
+                       prefix: str = "col",
+                       sep: str = "_",
+                       nastate: bool = False) -> list:
 
     def tostr(s):
         return ''.join(str(s).split()).lower()
